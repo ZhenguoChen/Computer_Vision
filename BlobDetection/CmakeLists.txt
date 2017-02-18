@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.6)
+project(BlobDetector)
+
+set(CMAKE_CXX_STANDARD 11)
+
+set(SOURCE_FILES
+        blob.cpp)
+
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+add_executable(BlobDetector ${SOURCE_FILES})
+target_link_libraries(BlobDetector ${OpenCV_LIBS})
+
