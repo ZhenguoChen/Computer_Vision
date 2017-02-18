@@ -20,6 +20,7 @@ int main( int argc, char** argv )
 	// Setup SimpleBlobDetector parameters.
 	SimpleBlobDetector::Params params;
 
+	params.blobColor = 255;
 	// Change thresholds
 	params.minThreshold = 10;
 	params.maxThreshold = 200;
