@@ -12,22 +12,36 @@ using namespace std;
 
 int main( int argc, char** argv )
 {
-
+	Mat im;
 	// Read image
-	Mat im = imread( "blob.jpg", IMREAD_GRAYSCALE );
-	cout<<"finish reading image"<<endl;
+	try{
+		//im = imread( "blob.jpg", IMREAD_UNCHANGED );
+		im = imread( "images.png", IMREAD_UNCHANGED);
+	}catch(Exception e){
+		cout<< e.msg<<endl;
+	}
+
+	if(im.empty()){
+		cout<<"failed reading image"<<endl;
+		return -1;
+	}
 
 	// Setup SimpleBlobDetector parameters.
 	SimpleBlobDetector::Params params;
 
-	params.blobColor = 255;
-	// Change thresholds
+	// 0 to extract dark blobs
+	// 255 to extract light blobs
+	//params.filterByColor = true;
+    //params.blobColor = 255;
+
+	// Change threshold, pixel smaller than minThreshold and larger than maxThreshold set to zero
 	params.minThreshold = 10;
-	params.maxThreshold = 200;
+	params.maxThreshold = 250;
 
 	// Filter by Area.
 	params.filterByArea = true;
-	params.minArea = 1500;
+	params.minArea = im.cols*im.rows/1000;
+	params.maxArea = im.cols*im.rows/2;
 
 	// Filter by Circularity
 	params.filterByCircularity = true;
@@ -40,7 +54,6 @@ int main( int argc, char** argv )
 	// Filter by Inertia
 	params.filterByInertia = true;
 	params.minInertiaRatio = 0.01;
-
 
 	// Storage for blobs
 	vector<KeyPoint> keypoints;
@@ -55,12 +68,19 @@ int main( int argc, char** argv )
 	detector.detect( im, keypoints);
 #else 
 
-	// Set up detector with params
+	// dark blob detection
+    params.blobColor = 0;
 	Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(params);   
-
 	// Detect blobs
 	detector->detect( im, keypoints);
-#endif 
+
+	// light blob detection
+	vector<KeyPoint> keypoints2;
+	params.blobColor = 255;
+	detector = SimpleBlobDetector::create(params);
+	detector->detect(im, keypoints2);
+	keypoints.insert(keypoints.end(), keypoints2.begin(), keypoints2.end());
+#endif
 
 	// Draw detected blobs as red circles.
 	// DrawMatchesFlags::DRAW_RICH_KEYPOINTS flag ensures
