@@ -1,8 +1,8 @@
-prefix=/home/zhenguo/Dropbox/Robosub/Computer_Vision/BlobDetection/Robosub_CV_C++/devel
+prefix=/home/zhenguo/Dropbox/Robosub/Computer_Vision/Robosub_CV_C++/devel
 
 Name: blobdetection
 Description: Description of blobdetection
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/zhenguo/Dropbox/Robosub/Computer_Vision/BlobDetection/Robosub_CV_C++/devel/lib 
+Libs: -L/home/zhenguo/Dropbox/Robosub/Computer_Vision/Robosub_CV_C++/devel/lib 
 Requires: cv_bridge image_transport message_runtime sensor_msgs
