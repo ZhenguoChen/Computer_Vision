@@ -2,6 +2,6 @@
 Catkin Workspace for Robosub Computer Vision
 
 ##Blob Detection
-requires opencv 2 installed
+requires opencv 3 installed
 
 ##Ethernet Camera notes
