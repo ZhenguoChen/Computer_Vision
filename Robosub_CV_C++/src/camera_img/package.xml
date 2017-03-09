@@ -1,7 +1,7 @@
 <package>
-  <name>blobdetection</name>
+  <name>camera_img</name>
   <version>0.0.0</version>
-  <description>subscribe camera images and do blob detection</description>
+  <description>get images from camera and publish</description>
   <author>Zhenguo</author>
   <maintainer email="Zhenguo.Chen@colorado.edu">Zhenguo Chen</maintainer>
   <license>A</license>
