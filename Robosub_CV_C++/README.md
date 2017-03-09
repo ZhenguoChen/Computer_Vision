@@ -11,10 +11,6 @@ edge detection
 ##how to build and run
 run catkin\_make
 
-execuable is in ./devel/lib/blobdetection
-
-                ./devel/lib/camera_img
-
-		./devel/lib/edgedetection
+execuable is in ./devel/lib/*
 
 run both program and it will capture the frames of your camera and do blob detection and edge detection
