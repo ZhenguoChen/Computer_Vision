@@ -18,6 +18,10 @@ int red_range[6] = {17, 15, 100, 50, 56, 200};
 int green_range[6] = {86, 31, 4, 220, 88, 50};
 int blue_range[6] = {25, 146, 190, 62, 174, 250};
 
+int red_hsv[2] = {75, 150};
+int green_hsv[2] = {320, 360};
+int blue_hsv[2] = {200, 260};
+
 bool init_params(Mat im)
 {
     //set blob detector parameter
@@ -48,7 +52,9 @@ void blob_detect(const sensor_msgs::ImageConstPtr& msg){
     try{
         //convert image
         Mat im;
+	Mat im_hsv;
         im = cv_bridge::toCvShare(msg, "bgr8")->image;
+	cvtColor(im, im_hsv, CV_RGB2HSV);
         static bool init_FLAG = init_params(im);
 
         if(im.empty()){
@@ -83,18 +89,12 @@ void blob_detect(const sensor_msgs::ImageConstPtr& msg){
         {
             Scalar color= im.at<Vec3b>(Point(it->pt.x, it->pt.y));
             cout<<"("<<it->pt.x<<","<<it->pt.y<<")"<<"-->"<<im.at<Vec3b>(Point(it->pt.x, it->pt.y))<<endl;
-            if(color[0]>=red_range[0]&&color[0]<=red_range[3] && color[1]>=red_range[1]&&color[1]<=red_range[4] &&color[2]>=red_range[2]&&color[2]<=red_range[5])
-            {
+	    if(color[0]>=red_hsv[0]&&color[0]<=red_hsv[1])
                 cout<<"Red Blob Detected"<<endl;
-            }
-            if(color[0]>=green_range[0]&&color[0]<=green_range[3] && color[1]>=green_range[1]&&color[1]<=green_range[4] &&color[2]>=green_range[2]&&color[2]<=green_range[5])
-            {
+            if(color[0]>=green_hsv[0]&&color[0]<=green_hsv[1])
                 cout<<"Green Blob Detected"<<endl;
-            }
-            if(color[0]>=blue_range[0]&&color[0]<=blue_range[3] && color[1]>=blue_range[1]&&color[1]<=blue_range[4] &&color[2]>=blue_range[2]&&color[2]<=blue_range[5])
-            {
+            if(color[0]>=blue_hsv[0]&&color[0]<=blue_hsv[1])
                 cout<<"Blue Blob Detected"<<endl;
-            }
         }
 
         imshow("video", im_with_keypoints);
